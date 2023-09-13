@@ -1,0 +1,8 @@
+{
+  "game": { "name": "Ashfalle Test", "maxPlayerLevel": 50 },
+  "lootOptions": {
+    "artistryRange": { "min": 2, "max": 4 },
+    "levelRange": { "min": 1, "max": null },
+    "itemType": "armor"
+  }
+}
