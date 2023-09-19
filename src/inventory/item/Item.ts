@@ -1,5 +1,8 @@
 import chalk from "chalk";
 
+import { ItemCategory } from "../../enums/categories.js";
+import { ItemOptions } from "../../types/options.js";
+
 /**
  * Represents an inventory item.
  */
@@ -28,7 +31,7 @@ class Item {
   }
 
   //
-  // getters/setters
+  // getters/setters and validation
 
   get name(): string {
     return this.#name;
@@ -114,16 +117,6 @@ class Item {
   //
   // informational
 
-  display(): void {
-    console.log(`name: ${chalk.green(this.name)}`);
-    console.log(`category: ${chalk.green(this.category)}`);
-    console.log(`burden: ${chalk.green(this.burden)}`);
-    console.log(`value: ${chalk.green(this.value)}`);
-    console.log(`maxQuantity: ${chalk.green(this.maxQuantity)}`);
-    console.log(`quantity: ${chalk.green(this.quantity)}`);
-  }
-
-  // TODO: incomplete toString
   toString(asQuantity = true): string {
     const name = chalk.green(this.name);
     const category = chalk.magenta(this.category);
@@ -132,35 +125,6 @@ class Item {
 
     return `${name} ${category} ${asQuantity ? "valueQuantity:" : "value:"} ${valueString}`;
   }
-
-  toConsole(asQuantity = true): void {
-    console.log(this.toString(asQuantity));
-  }
 }
-
-/**
- * Represents the different categories of inventory items.
- */
-enum ItemCategory {
-  COMPONENT = "Component",
-  CONSUMABLE = "Consumable",
-  EQUIPABLE = "Equipable",
-  GENERAL = "General", // default item category
-  REAGENT = "Reagent",
-}
-
-/**
- * Represents optional configuration for an Item.
- */
-type ItemOptions = Partial<{
-  name: string;
-  category: ItemCategory;
-
-  burden: number;
-  value: number;
-
-  maxQuantity: number;
-  quantity: number;
-}>;
 
 export { Item, ItemCategory };

@@ -1,5 +1,7 @@
 import gameSettings from "../settings/gameSettings.json" assert { type: "json" };
 
+import { ExperienceChartOptions } from "../types/options.js";
+
 /**
  * This class is used to create an experience chart for a skill.
  * The chart is an array where each index represents a level and
@@ -142,14 +144,5 @@ class ExperienceChart {
     });
   }
 }
-
-/**
- * Represents optional configuration for an Experience Chart.
- */
-type ExperienceChartOptions = Partial<{
-  skillCap: number;
-  incrementRamp: number;
-  lowerAdjust: number;
-}>;
 
 export default ExperienceChart;

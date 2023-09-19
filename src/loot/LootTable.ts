@@ -1,4 +1,6 @@
 import { Item } from "../inventory/item/Item.js";
+import { LootOptions } from "../types/options.js";
+import { randomEquipment } from "./generateArtistry.js";
 
 /**
  * Represents a loot table containing various loot pools.
@@ -145,7 +147,7 @@ class LootPool extends ALootPool {
  * Represents an artistry loot pool with a set of customizable loot options.
  */
 class ArtistryPool extends ALootPool {
-  #lootOptions: object;
+  #lootOptions: LootOptions;
 
   /**
    * Constructs an ArtistryPool with a name, a loot options object, and an optional weight.
@@ -153,7 +155,7 @@ class ArtistryPool extends ALootPool {
    * @param lootOptions - An object representing the loot options.
    * @param weight - Optional. The weight of the artistry pool.
    */
-  constructor(name: string, lootOptions: object, weight?: number) {
+  constructor(name: string, lootOptions: LootOptions, weight?: number) {
     super(name, weight);
     this.#lootOptions = lootOptions;
   }
@@ -163,7 +165,8 @@ class ArtistryPool extends ALootPool {
    * @returns An Item instance.
    */
   getItem(): Item {
-    return new Item(); // TODO: artistry
+    const eq = randomEquipment(this.#lootOptions);
+    return eq;
   }
 }
 

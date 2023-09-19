@@ -1,6 +1,9 @@
 import gameSettings from "../settings/gameSettings.json" assert { type: "json" };
+
 import { createArmor, createJewelry, createWeapon } from "../loot/artistry/artistryFactory.js";
 import { getRandomElement, getRandomIntInclusive } from "../utilities/utilities.js";
+import { ItemType } from "../types/items.js";
+import { LootOptions, AppliedLootOptions } from "../types/options.js";
 
 /**
  * The `equipment` object contains nested objects for different categories of equipment,
@@ -75,7 +78,7 @@ function _applyLootOptions(lootOptions: LootOptions): AppliedLootOptions {
  *
  * @param {ItemType} type - The type of the item to generate.
  * @param {string} subtype - The subtype of the item to generate.
- * @returns {(lootOptions: LootOptions) => any} A function that generates an item when called with loot options.
+ * @returns {(lootOptions: LootOptions) => Item} A function that generates an item when called with loot options.
  */
 function _generate(type: ItemType, subtype: string): any {
   return (lootOptions: LootOptions = gameSettings.lootOptions) => {
@@ -83,15 +86,9 @@ function _generate(type: ItemType, subtype: string): any {
 
     // Use generator
     const generator: Record<ItemType, () => any> = {
-      armor: () => {
-        createArmor(subtype, artistry, level);
-      },
-      jewelry: () => {
-        createJewelry(subtype, artistry, level);
-      },
-      weapon: () => {
-        createWeapon(subtype, artistry, level);
-      },
+      armor: () => createArmor(subtype, artistry, level),
+      jewelry: () => createJewelry(subtype, artistry, level),
+      weapon: () => createWeapon(subtype, artistry, level),
     };
 
     const item = generator[type]();
@@ -125,7 +122,6 @@ function randomEquipment(lootOptions: LootOptions = gameSettings.lootOptions): a
     case "jewelry":
       const jewelrySubtype = getRandomElement(jewelrySubtypes) as keyof typeof equipment.jewelry;
       return equipment.jewelry[jewelrySubtype](lootOptions);
-
     case "weapon":
       const weaponSubtype = getRandomElement(weaponSubtypes) as keyof typeof equipment.weapon;
       return equipment.weapon[weaponSubtype](lootOptions);
@@ -134,25 +130,5 @@ function randomEquipment(lootOptions: LootOptions = gameSettings.lootOptions): a
       throw new Error(`Unsupported itemType: ${itemType}`);
   }
 }
-
-// TODO: move to types?
-type ItemType = "armor" | "jewelry" | "weapon";
-
-type LootOptions = {
-  artistryRange: {
-    min: number;
-    max: number;
-  };
-  levelRange: {
-    min: number;
-    max: number | null;
-  };
-  itemType: string;
-};
-
-type AppliedLootOptions = {
-  artistry: number;
-  level: number;
-};
 
 export { equipment, randomEquipment };

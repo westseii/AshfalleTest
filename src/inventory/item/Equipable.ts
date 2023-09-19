@@ -1,4 +1,7 @@
 import chalk from "chalk";
+
+import { EquipableOptions } from "../../types/options.js";
+import { EquipSlot } from "../../enums/slots.js";
 import { Item, ItemCategory } from "../item/Item.js";
 
 /**
@@ -16,7 +19,7 @@ class Equipable extends Item {
   }
 
   //
-  // getters/setters
+  // getters/setters and validation
 
   get equipSlot(): EquipSlot {
     return this.#equipSlot;
@@ -72,50 +75,6 @@ class Equipable extends Item {
 
     return `${super.toString(asQuantity)} Art: ${artistry} Lv: ${level}`;
   }
-
-  display(): void {
-    super.display();
-    console.log(`equipSlot: ${chalk.green(this.equipSlot)}`);
-    console.log(`isArtistryItem: ${chalk.green(this.isArtistryItem)}`);
-    console.log(`artistry: ${chalk.green(this.artistry)}`);
-    console.log(`level: ${chalk.green(this.level)}`);
-  }
 }
-
-/**
- * Represents the different types of equipment slots.
- */
-enum EquipSlot {
-  CHEST = "Chest",
-  FEET = "Feet",
-  FINGER = "Finger",
-  HANDS = "Hands",
-  HEAD = "Head",
-  LEGS = "Legs",
-  NECK = "Neck",
-  ONE_HANDED = "One-handed",
-  RELIC = "Relic",
-  TRINKET = "Trinket",
-  TWO_HANDED = "Two-handed",
-}
-
-/**
- * Represents optional configuration for an Equipable.
- */
-type EquipableOptions = Partial<{
-  name: string;
-  category: ItemCategory;
-
-  burden: number;
-  value: number;
-
-  maxQuantity: number;
-  quantity: number;
-
-  equipSlot: EquipSlot;
-  isArtistryItem: boolean;
-  artistry: number;
-  level: number;
-}>;
 
 export { Equipable, EquipSlot };

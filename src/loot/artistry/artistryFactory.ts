@@ -60,7 +60,7 @@ function _getBaseMaterial() {
 // TODO: certain materials will be more rare than other materials
 
 function _placeholderValueCalc(artistry: number, level: number): number {
-  return artistry * level * getRandomIntInclusive(3, 11); // TODO: more sophisticated value generation, using _getBaseMaterial()
+  return artistry * level * getRandomIntInclusive(3, 33); // TODO: more sophisticated value generation, using _getBaseMaterial()
 }
 
 //

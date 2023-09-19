@@ -1,7 +1,6 @@
 import chalk from "chalk";
 
 import setDefaultGameSettings from "./default/setDefaultGameSettings.js";
-import { equipment, randomEquipment } from "./loot/generateArtistry.js";
 
 (function main(): void {
   try {
@@ -9,8 +8,7 @@ import { equipment, randomEquipment } from "./loot/generateArtistry.js";
     const gameSettings = setDefaultGameSettings();
 
     if (gameSettings !== null) {
-      const itemCloth = equipment.armor.cloth(gameSettings.lootOptions);
-      const itemRandom = randomEquipment(gameSettings.lootOptions);
+      // ...
     } else {
       console.error(chalk.red("Game settings is null"));
     }
